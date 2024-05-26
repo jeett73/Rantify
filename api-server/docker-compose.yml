@@ -1,0 +1,27 @@
+version: "3.5"
+services:
+  aura-server:
+      image: "rantify-api-server"
+      container_name: "rantify_api_server"
+      restart: always
+      build:
+          context: ./
+          dockerfile: Dockerfile
+      ports:
+          - "8080:80"
+      links:
+          - mongodb
+      volumes:
+          - "./data/logs:/usr/app/logs"
+          - "./data/uploads:/usr/app/public/uploads"
+          # - ./data/backup:/usr/app/backup
+  mongodb:
+      image: "mongo:5.0.0-focal"
+      container_name: "rantify_mongodb"
+      ports:
+          - "27077:27017"
+      restart: always
+      volumes:
+          - "./data/mongodb:/data/db"
+      environment:
+          MONGO_INITDB_DATABASE: admin
