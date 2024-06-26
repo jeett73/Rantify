@@ -13,11 +13,11 @@ RUN npm install
 # Copy the rest of the application code
 COPY . .
 
-# Build the React app for production
-RUN npm run build
-
 # Use nginx to serve the React app
 FROM nginx:alpine
+
+# Build the React app for production
+RUN npm run build
 
 # Copy the built React app from the build stage
 COPY --from=build /app/build /usr/share/nginx/html
