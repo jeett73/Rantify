@@ -19,6 +19,9 @@ COPY package*.json ./
 # Install dependencies
 RUN npm install
 
+# Clear npm cache and install dependencies again
+RUN npm cache clean --force && npm install
+
 # Copy the rest of the application code
 COPY . .
 
