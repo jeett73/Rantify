@@ -5,13 +5,13 @@ FROM node:14-alpine as build
 WORKDIR /app
 
 # Copy package.json and package-lock.json to install dependencies
-COPY package*.json ./
+COPY ./package.json /app
 
 # Install dependencies
 RUN npm install
 
 # Copy the rest of the application code
-COPY . .
+COPY ./ /app
 
 # Build the React app for production
 RUN npm run build

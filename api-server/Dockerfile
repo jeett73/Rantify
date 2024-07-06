@@ -14,13 +14,13 @@ FROM node:18.10.0-alpine
 WORKDIR /app
 
 # Copy package.json and package-lock.json to install dependencies
-COPY package*.json /app
+COPY ./package.json /app
 
 # Clear npm cache and install dependencies again
 RUN npm cache clean --force && npm install
 
 # Copy the rest of the application code
-COPY . .
+COPY ./ /app
 
 # Expose the port on which the Node.js application will run
 EXPOSE 3000
