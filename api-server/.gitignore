@@ -2,4 +2,3 @@ node_modules
 public/uploads
 data
 package-lock.json
-config/config.json
