@@ -10,8 +10,7 @@
 # RUN mkdir -p ./logs
 # CMD ["sh", "start.sh"]
 # Set the working directory inside the container
-FROM node:18.10.0-alpine
-RUN npm i npm@6.13.4 
+FROM node:20.13.1-alpine 
 WORKDIR /app
 
 # Copy package.json and package-lock.json to install dependencies
