@@ -11,16 +11,16 @@
 # CMD ["sh", "start.sh"]
 # Set the working directory inside the container
 FROM node:18.10.0-alpine 
-WORKDIR /app
+WORKDIR /usr/app/
 
 # Copy package.json and package-lock.json to install dependencies
-COPY ./package.json /app
+COPY ./package.json /usr/app/
 
 # Clear npm cache and install dependencies again
 RUN npm cache clean --force && npm install
 
 # Copy the rest of the application code
-COPY ./ /app
+COPY ./ /usr/app/
 
 # Expose the port on which the Node.js application will run
 EXPOSE 3000

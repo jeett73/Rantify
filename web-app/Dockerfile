@@ -2,16 +2,16 @@
 FROM node:14-alpine as build
 
 # Set the working directory inside the container
-WORKDIR /app
+WORKDIR /usr/app/
 
 # Copy package.json and package-lock.json to install dependencies
-COPY ./package.json /app
+COPY ./package.json /usr/app/
 
 # Install dependencies
 RUN npm install
 
 # Copy the rest of the application code
-COPY ./ /app
+COPY ./ /usr/app/
 
 # Build the React app for production
 RUN npm run build
@@ -20,7 +20,7 @@ RUN npm run build
 FROM nginx:alpine
 
 # Copy the built React app from the build stage
-COPY --from=build /app/build /usr/share/nginx/html
+COPY --from=build /usr/app/build /usr/share/nginx/html
 
 # Copy custom nginx configuration
 COPY nginx.conf /etc/nginx/conf.d/default.conf
