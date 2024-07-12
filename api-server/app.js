@@ -115,7 +115,7 @@ const normalizePort = function (val) {
 
 		const io = socketIo(server, {
 			cors: {
-				origin: "http://localhost",
+				origin: "http://54.242.148.189",
 				methods: ["GET", "POST"]
 			}
 		});

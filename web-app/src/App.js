@@ -17,7 +17,7 @@ function App() {
   loggedUserId = JSON.parse(loggedUserId);
 
   useEffect(() => {
-    const socketConnection = io('localhost:8080');
+    const socketConnection = io('54.242.148.189:8080');
     socketConnection.on('connect', () => {
       console.log('Connected to server');
     });
