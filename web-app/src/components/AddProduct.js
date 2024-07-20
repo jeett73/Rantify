@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import "../CustomCss.css"
-import BASE_URL from '../Config';
+import config from '../Config';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import ProductServices from '../services/products';
@@ -104,7 +104,7 @@ function AddProduct({ onAddProduct }) {
             const response = await ProductServicesObj.addProduct(formDataFinal);
             console.log(response.data.data,"response");
             onAddProduct(response.data.data);            
-            // axios.post(`${BASE_URL}/products/${loggedUserId.user._id}/save`, formDataFinal, {
+            // axios.post(`${config.base_url}/products/${loggedUserId.user._id}/save`, formDataFinal, {
             //     headers: {
             //         'authorization': localStorage.getItem("token"),
             //     }

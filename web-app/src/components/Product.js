@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import AddProduct from "./AddProduct";
 import LogOut from './LogOut';
-import BASE_URL from '../Config';
+import config from '../Config';
 import axios from 'axios';
 import ProductServices from '../services/products';
 const ProductServicesObj = new ProductServices();
@@ -27,7 +27,7 @@ function Product({ products, loading, hasMore }) {
     //     const listAllProduct = await ProductServicesObj.getProductList();
     //     console.log(listAllProduct,"listAllProduct");
     //     setProducts(listAllProduct)
-    //     // axios.post(`${BASE_URL}/products/`, {}, {
+    //     // axios.post(`${config.base_url}/products/`, {}, {
     //     //     headers: {
     //     //         'authorization': localStorage.getItem("token"),
     //     //     }
@@ -88,7 +88,7 @@ function Product({ products, loading, hasMore }) {
                             {products.map((product) => {
                                 return <div className="col-sm-6 col-lg-4" key={product._id}>
                                     <div className="card card-sm">
-                                        <a href="#" className="d-block"><img src={`../../uploads/${product.uploadedBy}/${product.attachments[0].name}`} className="card-img-top" style={{ height: "300px", width: "500px" }} /></a>
+                                        <a href="#" className="d-block"><img src={`${config.base_url}/${product.attachments[0].path}`} className="card-img-top" style={{ height: "300px", width: "500px" }} /></a>
                                         {/* <div style={{ position: "absolute", top: "50%", right: 0, transform: `translateY(-50%)`, color: "white", fontSize: "24px" }}>{">"}</div> */}
                                         <div className="card-body" style={{ backgroundColor: product.isavailable ? 'rgb(128, 196, 128)' : 'rgb(255 112 112 / 77%)' }} >
                                             <div className="d-flex align-items-center">

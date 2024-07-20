@@ -1,4 +1,7 @@
 // config.js
-const BASE_URL = 'http://54.242.148.189:8080';
+const config = {
+    "base_url" : 'http://44.220.153.168:8080',
+    "ipAddress": "44.220.153.168"
+};
 
-export default BASE_URL;
+export default config;

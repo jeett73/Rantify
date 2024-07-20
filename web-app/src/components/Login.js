@@ -1,7 +1,7 @@
 import { React, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import BASE_URL from '../Config';
+import config from '../Config';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Cookies from 'js-cookie';
@@ -18,7 +18,7 @@ const Login = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        axios.post(`${BASE_URL}/index/login`, {
+        axios.post(`${config.base_url}/index/login`, {
             email: inputs.email,
             password: inputs.password
         }).then(response => {

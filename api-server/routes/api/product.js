@@ -12,8 +12,8 @@ module.exports = function (express) {
             const storage = multer.diskStorage({
                 // Set file storage path
                 destination: function (req, file, callback) {
-                    fsExtra.mkdirsSync(`../web-app/public/uploads/${req.params.id}/`);
-                    callback(null, `../web-app/public/uploads/${req.params.id}/`);
+                    fsExtra.mkdirsSync(`./public/uploads/${req.params.id}/`);
+                    callback(null, `./public/uploads/${req.params.id}/`);
                 },
                 // Rename the file name using uuid
                 filename: function (req, file, callback) {

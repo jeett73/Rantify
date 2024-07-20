@@ -7,6 +7,7 @@ import Register from "./components/Register";
 import { ProtectedRouter } from "./ProtectedRoutes";
 import Dashboard from "./components/Dashboard";
 import Chat from "./components/Chat";
+import config from './Config';
 
 import React, { useEffect, useState } from 'react';
 import io from 'socket.io-client';
@@ -17,7 +18,7 @@ function App() {
   loggedUserId = JSON.parse(loggedUserId);
 
   useEffect(() => {
-    const socketConnection = io('54.242.148.189:8080');
+    const socketConnection = io(`${config.ipAddress}:8080`);
     socketConnection.on('connect', () => {
       console.log('Connected to server');
     });

@@ -1,6 +1,7 @@
 {
     "site_title": "Priyanshu-Demo",
-    "base_url": "http://localhost:8080",
+    "base_url": "http://44.220.153.168:8080",
+    "ipAddress": "44.220.153.168",
     "client_base_url": "http://localhost:3000",
     "environment": "development",
     "http": {

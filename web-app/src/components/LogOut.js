@@ -1,11 +1,11 @@
-import BASE_URL from '../Config';
+import config from '../Config';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 function LogOut() {
     const navigate = useNavigate();
     const logOutUser = () => {
-        axios.post(`${BASE_URL}/users/logout`, {}, {
+        axios.post(`${config.base_url}/users/logout`, {}, {
             headers: {
                 'authorization': localStorage.getItem("token"),
             }

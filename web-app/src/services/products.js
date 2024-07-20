@@ -1,4 +1,4 @@
-import BASE_URL from '../Config';
+import config from '../Config';
 import axios from 'axios';
 
 const products = class {
@@ -8,7 +8,7 @@ const products = class {
     getProductList(page) {
         return new Promise(async (resolve, reject) => {
             try {
-                axios.post(`${BASE_URL}/products/`, {
+                axios.post(`${config.base_url}/products/`, {
                     start: page,
                     length: 6
                 }, {
@@ -38,7 +38,7 @@ const products = class {
             try {
                 let loggedUserId = localStorage.getItem("user");
                 loggedUserId = JSON.parse(loggedUserId);
-                axios.post(`${BASE_URL}/products/${loggedUserId.user._id}/save`, formDataFinal, {
+                axios.post(`${config.base_url}/products/${loggedUserId.user._id}/save`, formDataFinal, {
                     headers: {
                         'authorization': localStorage.getItem("token"),
                     }
@@ -62,7 +62,7 @@ const products = class {
     setProductAvailability(status, productId) {
         return new Promise(async (resolve, reject) => {
             try {
-                axios.put(`${BASE_URL}/products/${productId}/change-status`, { status: status }, {
+                axios.put(`${config.base_url}/products/${productId}/change-status`, { status: status }, {
                     headers: {
                         'authorization': localStorage.getItem("token"),
                     }
@@ -86,7 +86,7 @@ const products = class {
     getUserChats(receivedBy, loggedUser) {
         return new Promise(async (resolve, reject) => {
             try {
-                axios.get(`${BASE_URL}/chats/${loggedUser}/${receivedBy}`, {
+                axios.get(`${config.base_url}/chats/${loggedUser}/${receivedBy}`, {
                     headers: {
                         'authorization': localStorage.getItem("token"),
                     }

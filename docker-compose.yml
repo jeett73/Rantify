@@ -9,6 +9,7 @@ services:
       - "8080:8080"
     volumes:
       - ./api-server:/app
+      - ./data/public:/usr/app/public
     environment:
       NODE_ENV: production  # Set your desired environment variables here
 

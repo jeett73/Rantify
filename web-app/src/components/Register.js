@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import "../CustomCss.css"
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import BASE_URL from '../Config';
+import config from '../Config';
 
 function Register() {
     const navigate = useNavigate();
@@ -121,7 +121,7 @@ function Register() {
 
     const submitForm = async (formData) => {
         try {
-            axios.post(`${BASE_URL}/index/user/save`, {
+            axios.post(`${config.base_url}/index/user/save`, {
                 address: {
                     line1: formData.line1 || "",
                     line2: formData.line2 || "",
