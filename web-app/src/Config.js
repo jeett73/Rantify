@@ -1,7 +1,7 @@
 // config.js
 const config = {
-    "base_url" : 'http://44.220.153.168:8080',
-    "ipAddress": "44.220.153.168"
+    "base_url" : 'http://98.80.15.216:8080',
+    "ipAddress": "98.80.15.216"
 };
 
 export default config;

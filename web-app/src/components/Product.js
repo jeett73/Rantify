@@ -8,16 +8,29 @@ import ProductServices from '../services/products';
 const ProductServicesObj = new ProductServices();
 
 function Product({ products, loading, hasMore }) {
+    const [mainProducts, setMainProducts] = useState([]);
+    useEffect(() => {
+        setMainProducts(products);
+    }, [products]);
 
-    // const [productStatus, setProductStatus] = useState(initialStatus);
-    // const [products, setProducts] = useState([]);
+    const handleAvailability = async (event,productId) => {
+        setMainProducts((prevProducts) =>
+            prevProducts.map((product) =>
+                product._id === productId
+                    ? { ...product, isavailable: !product.isavailable }
+                    : product
+            )
+        );
+        const isChecked = event.target.checked;
+        await ProductServicesObj.setProductAvailability(isChecked, productId);
+    };
     let loggedUserId = localStorage.getItem("user");
     loggedUserId = JSON.parse(loggedUserId)
 
-    const handleAvailability = async (event, productId) => {
-        const isChecked = event.target.checked;
-        await ProductServicesObj.setProductAvailability(isChecked, productId);
-    }
+    // const handleAvailability = async (event, productId) => {
+    //     const isChecked = event.target.checked;
+    //     await ProductServicesObj.setProductAvailability(isChecked, productId);
+    // }
     // useEffect(() => {
     //     console.log("USEEFFECT CALL");
     //     listAllProduct()
@@ -85,7 +98,7 @@ function Product({ products, loading, hasMore }) {
                 <div className="page-body">
                     <div className="container-xl">
                         <div className="row row-cards">
-                            {products.map((product) => {
+                            {mainProducts.map((product) => {
                                 return <div className="col-sm-6 col-lg-4" key={product._id}>
                                     <div className="card card-sm">
                                         <a href="#" className="d-block"><img src={`${config.base_url}/${product.attachments[0].path}`} className="card-img-top" style={{ height: "300px", width: "500px" }} /></a>
@@ -97,7 +110,9 @@ function Product({ products, loading, hasMore }) {
                                                         <input
                                                             class="form-check-input"
                                                             type="checkbox"
-                                                            checked={product.isavailable ? true : false}
+                                                            checked={product.isavailable}
+                                                            // checked={product.isavailable ? true : false}
+                                                            // onChange={(event) => handleAvailability(event, product._id)}
                                                             onChange={(event) => handleAvailability(event, product._id)}
                                                         />
                                                     )}

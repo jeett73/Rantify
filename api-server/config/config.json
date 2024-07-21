@@ -1,7 +1,7 @@
 {
     "site_title": "Priyanshu-Demo",
-    "base_url": "http://44.220.153.168:8080",
-    "ipAddress": "44.220.153.168",
+    "base_url": "http://98.80.15.216:8080",
+    "ipAddress": "98.80.15.216",
     "client_base_url": "http://localhost:3000",
     "environment": "development",
     "http": {
@@ -12,8 +12,18 @@
         "atlas":false,
         "user": "",
         "password": "",
-        "database": "priyanshu-demo",
+        "database": "rantify",
         "host": "mongodb",
+        "port": "27017",
+        "rootUser": "admin",
+        "rootPassword": "admin"
+    },
+    "local-datasource": {
+        "atlas":false,
+        "user": "",
+        "password": "",
+        "database": "priyanshu-demo",
+        "host": "127.0.0.1",
         "port": "27017",
         "rootUser": "admin",
         "rootPassword": "admin"

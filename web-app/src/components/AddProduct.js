@@ -51,14 +51,8 @@ function AddProduct({ onAddProduct }) {
 
     const validateForm = () => {
         let valid = true;
-
         const newCustomCss = { ...customCss };
         const newErrors = { ...errors };
-
-        console.log("Form data");
-        console.log(formData);
-
-
         if (!formData.rent.trim()) {
             newErrors.rent = 'Rent is required';
             newCustomCss.rent = "rent";
