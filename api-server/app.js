@@ -148,8 +148,14 @@ const normalizePort = function (val) {
 					sendBy: data.sendBy,
 					message: data.message
 				})
+				const userDetails = await db.models.users.findOne({
+					_id: data.sendBy
+				}, "firstName")
 				if (userSocket) {
-					io.to(userSocket).emit('message', data.message);
+					io.to(userSocket).emit('message', {
+						message: data.message,
+						firstName: userDetails.firstName
+					});
 				} else {
 					// Handle user not found
 					console.log('User not found');

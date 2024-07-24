@@ -91,8 +91,6 @@ module.exports = function (express) {
                 createdOn: -1
             }
             const pagination = await commonFn.paginationQuery(req);
-            console.log(pagination.offset, "pagination.offset");
-            console.log(pagination.row,"pagination.row");
             const products = await db.models.products.aggregate([{
                 "$sort": sort
             }, {
@@ -130,7 +128,8 @@ module.exports = function (express) {
                     description: 1,
                     attachments: 1,
                     isavailable: 1,
-                    uploadedBy: 1
+                    uploadedBy: 1,
+                    createdOn: 1
                 }
             }]);
             res.sendSuccess(products, "Products list");

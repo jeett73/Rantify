@@ -4,6 +4,7 @@ import AddProduct from "./AddProduct";
 import LogOut from './LogOut';
 import config from '../Config';
 import axios from 'axios';
+import moment from 'moment';
 import ProductServices from '../services/products';
 const ProductServicesObj = new ProductServices();
 
@@ -13,7 +14,7 @@ function Product({ products, loading, hasMore }) {
         setMainProducts(products);
     }, [products]);
 
-    const handleAvailability = async (event,productId) => {
+    const handleAvailability = async (event, productId) => {
         setMainProducts((prevProducts) =>
             prevProducts.map((product) =>
                 product._id === productId
@@ -122,7 +123,7 @@ function Product({ products, loading, hasMore }) {
                                                 {/* <span className="avatar me-3 rounded" style={{ backgroundImage: `url(./static/avatars/000m.jpg)` }}></span> */}
                                                 <div>
                                                     <div>{product?.userDetails?.firstName}</div>
-                                                    <div className="text-secondary">3 days ago</div>
+                                                    <div className="text-secondary">{moment(product.createdOn).format("MMMM DD")}</div>
                                                 </div>
                                                 <div className="ms-auto">
                                                     <div className="card-body">
