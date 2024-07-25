@@ -10,6 +10,7 @@ function Chat({ socket }) {
     const [messages, setMessages] = useState([]);
     const [chats, setChats] = useState([]);
     const chatContainerRef = useRef(null);
+    const [chatPersons, setChatPersons] = useState([]);
 
     const scrollToBottom = () => {
         if (chatContainerRef.current) {
@@ -18,14 +19,19 @@ function Chat({ socket }) {
     };
     useEffect(() => {
         listAllChats();
+        listAllChatPersons();
     }, [])
     let loggedUserId = localStorage.getItem("user");
     loggedUserId = JSON.parse(loggedUserId)
 
     const listAllChats = async () => {
         const listAllChat = await ProductServicesObj.getUserChats(userId, loggedUserId.user._id);
-        console.log(listAllChat);
         setChats(listAllChat)
+    }
+
+    const listAllChatPersons = async () => {
+        const listAllChat = await ProductServicesObj.getChatPersonsList(loggedUserId.user._id);
+        setChatPersons(listAllChat)
     }
 
     const [formData, setFormData] = useState({
@@ -56,6 +62,10 @@ function Chat({ socket }) {
         })
     }
 
+    const getChats = async (id) => {
+        const listAllChat = await ProductServicesObj.getUserChats(id, loggedUserId.user._id);
+        setChats(listAllChat)
+    }
     // Receive messages
     // socket.on('message', (message) => {
     //     console.log('Received message:', message);
@@ -66,7 +76,7 @@ function Chat({ socket }) {
         setMessages(prevMessages => [...prevMessages, {
             sent: loggedUserId.user._id,
             message: message.message,
-            receiverName : message.firstName
+            receiverName: message.firstName
         }])
     }
     // Function to scroll to the bottom of the chat container
@@ -78,7 +88,7 @@ function Chat({ socket }) {
 
     useEffect(() => {
         scrollToBottom();
-      }, [chats]);
+    }, [chats]);
 
     useEffect(() => {
         // Listen for incoming messages when component mounts
@@ -89,6 +99,7 @@ function Chat({ socket }) {
             socket.off('message', handleMessage);
         };
     }, []);
+    console.log(chatPersons, "chatPersonschatPersons");
     return (
         <>
             <div class="page-wrapper">
@@ -131,20 +142,22 @@ function Chat({ socket }) {
                                             <input type="text" value="" class="form-control" placeholder="Search…" aria-label="Search" />
                                         </div>
                                     </div>
-                                    <div class="card-body p-0 scrollable" style={{ "maxHeight": "35rem" }}>
-                                        <div class="nav flex-column nav-pills" role="tablist">
-                                            <a href="#chat-1" class="nav-link text-start mw-100 p-3 active" id="chat-1-tab" data-bs-toggle="pill" role="tab" aria-selected="true">
-                                                <div class="row align-items-center flex-fill">
-                                                    <div class="col-auto"><span class="avatar" style={{ "backgroundImage": "url(./static/avatars/000m.jpg)" }}></span>
+                                    {chatPersons.map((chatPerson) => {
+                                        return <div class="card-body p-0 scrollable" style={{ "maxHeight": "35rem" }} onClick={() => getChats(chatPerson._id)}>
+                                            <div class="nav flex-column nav-pills" role="tablist">
+                                                <a href="#chat-1" class="nav-link text-start mw-100 p-3 active" id="chat-1-tab" data-bs-toggle="pill" role="tab" aria-selected="true">
+                                                    <div class="row align-items-center flex-fill">
+                                                        <div class="col-auto"><span class="avatar" style={{ "backgroundImage": "url(./static/avatars/000m.jpg)" }}></span>
+                                                        </div>
+                                                        <div class="col text-body">
+                                                            <div>{chatPerson.userDetails[0].firstName}</div>
+                                                            <div class="text-secondary text-truncate w-100">{chatPerson.message.slice(0, 25)}...</div>
+                                                        </div>
                                                     </div>
-                                                    <div class="col text-body">
-                                                        <div>Paweł Kuna</div>
-                                                        <div class="text-secondary text-truncate w-100">Sure Paweł, let me pull the latest updates.</div>
-                                                    </div>
-                                                </div>
-                                            </a>
+                                                </a>
+                                            </div>
                                         </div>
-                                    </div>
+                                    })}
                                 </div>
                                 <div class="col-12 col-lg-7 col-xl-9 d-flex flex-column">
                                     <div class="card-body scrollable" style={{ "height": "35rem" }} ref={chatContainerRef}>

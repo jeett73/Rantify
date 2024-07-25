@@ -11,6 +11,7 @@ module.exports = {
 		"1009": "Error while fetch product list",
 		"1010": "Error while user logout",
 		"1011": "Error while change product availability status",
-		"1012": "Error while get chats" 
+		"1012": "Error while get chats",
+		"1013": "Error while get chat persons list"  
 	}
 };

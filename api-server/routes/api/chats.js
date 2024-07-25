@@ -58,5 +58,61 @@ module.exports = function (express) {
             res.sendError(error, "1012");
         }
     })
+
+    router.get("/chat/persons/:id", async function (req, res, next) {
+        try {
+            const chatPersons = await db.models.chats.aggregate([{
+                $match: {
+                    $or: [{
+                        sendBy: new ObjectId(req.params.id)
+                    }]
+                }
+            }, {
+                "$group": {
+                    "_id": "$receivedBy",
+                    "message": {
+                        "$last": "$message"
+                    },
+                    "receivedBy": {
+                        "$first": "$receivedBy"
+                    }
+                }
+            }, {
+                "$lookup": {
+                    "from": "users",
+                    "let": {
+                        "userId": "$receivedBy"
+                    },
+                    "pipeline": [{
+                        "$match": {
+                            "$expr": {
+                                "$and": [{
+                                    "$eq": ["$_id", "$$userId"]
+                                }]
+                            }
+                        }
+                    }, {
+                        "$project": {
+                            "firstName": 1
+                        }
+                    }],
+                    "as": "userDetails"
+                }
+            }, {
+                $project: {
+                    "message": 1,
+                    // "name": {
+                    //     $arrayElemAt: ["userDetails.firstName", 0]
+                    // }
+                    "userDetails": 1
+                }
+            }]);
+            res.sendSuccess(chatPersons, "Chat persons")
+        } catch (error) {
+            catchErrorLogs(config.messages["1013"], "1013");
+            catchErrorLogs(error);
+            res.sendError(error, "1013");
+        }
+    })
     return router;
 }

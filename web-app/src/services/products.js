@@ -107,5 +107,30 @@ const products = class {
             }
         });
     }
+
+    getChatPersonsList(id) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                axios.get(`${config.base_url}/chats/chat/persons/${id}`, {
+                    headers: {
+                        'authorization': localStorage.getItem("token"),
+                    }
+                }).then(response => {
+                    console.log(response.data.data, "responseresponseresponse");
+                    resolve(response.data.data);
+                    // this.getProductList();
+                }).catch(error => {
+                    reject(error);
+                    // if (error.response.data.status == 401) {
+                    //     // navigate('/');
+                    // }
+                });
+            } catch (err) {
+                console.log(err);
+                reject(err);
+            }
+        });
+
+    }
 };
 export default products;
