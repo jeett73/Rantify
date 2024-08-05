@@ -51,7 +51,7 @@ function App() {
           <Route path="/" element={<Navigate to="/dashboard" />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
-          {socket && <Route path="/chats/:userId" element={<Chat socket={socket} />} />}
+          {socket && <Route path="/chats/:userId?" element={<Chat socket={socket} />} />}
           <Route index path="/dashboard" element={
             <ProtectedRouter>
               <Dashboard />

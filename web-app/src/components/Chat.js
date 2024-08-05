@@ -6,7 +6,8 @@ import ProductServices from '../services/products';
 const ProductServicesObj = new ProductServices();
 
 function Chat({ socket }) {
-    const { userId } = useParams();
+    let { userId } = useParams();
+    const [paramsId, setUserId] = useState(userId);
     const [messages, setMessages] = useState([]);
     const [chats, setChats] = useState([]);
     const chatContainerRef = useRef(null);
@@ -17,22 +18,39 @@ function Chat({ socket }) {
             chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
         }
     };
-    useEffect(() => {
-        listAllChats();
-        listAllChatPersons();
-    }, [])
     let loggedUserId = localStorage.getItem("user");
     loggedUserId = JSON.parse(loggedUserId)
 
-    const listAllChats = async () => {
-        const listAllChat = await ProductServicesObj.getUserChats(userId, loggedUserId.user._id);
-        setChats(listAllChat)
-    }
 
-    const listAllChatPersons = async () => {
-        const listAllChat = await ProductServicesObj.getChatPersonsList(loggedUserId.user._id);
-        setChatPersons(listAllChat)
-    }
+    useEffect(() => {
+        const fetchChatPersons = async () => {
+            const listAllChat = await ProductServicesObj.getChatPersonsList(loggedUserId.user._id);
+            setChatPersons(listAllChat);
+        };
+
+        fetchChatPersons();
+    }, []);
+
+    useEffect(() => {
+        if (paramsId === undefined && chatPersons.length > 0) {
+            setUserId(chatPersons[0]?._id || undefined);
+        }
+    }, [chatPersons]);
+
+    useEffect(() => {
+        const fetchChats = async () => {
+            console.log(JSON.stringify(paramsId,"userIdMAINMIAIHADIHDIH"));
+            if (paramsId !== undefined) {
+                window.history.pushState({}, '', `/chats/${paramsId}`);
+                const listAllChat = await ProductServicesObj.getUserChats(paramsId, loggedUserId.user._id);
+                setChats(listAllChat);
+            }
+        };
+
+        fetchChats();
+    }, [paramsId]);
+
+
 
     const [formData, setFormData] = useState({
         message: ''
@@ -53,16 +71,17 @@ function Chat({ socket }) {
     };
     const sendMessage = () => {
         setMessages(prevMessages => [...prevMessages, {
-            sent: userId,
+            sent: paramsId,
             message: formData.message
         }])
-        socket.emit('sendMessageToUser', { receivedBy: userId, sendBy: loggedUserId.user._id, message: formData.message });
+        socket.emit('sendMessageToUser', { receivedBy: paramsId, sendBy: loggedUserId.user._id, message: formData.message });
         setFormData({
             message: ''
         })
     }
 
     const getChats = async (id) => {
+        window.history.pushState({}, '', `/chats/${id}`);
         const listAllChat = await ProductServicesObj.getUserChats(id, loggedUserId.user._id);
         setChats(listAllChat)
     }
@@ -151,7 +170,7 @@ function Chat({ socket }) {
                                                         </div>
                                                         <div class="col text-body">
                                                             <div>{chatPerson.userDetails[0].firstName}</div>
-                                                            <div class="text-secondary text-truncate w-100">{chatPerson.message.slice(0, 25)}...</div>
+                                                            <div class="text-secondary text-truncate w-100">{chatPerson.message.length > 25 ? chatPerson.message.slice(0, 25) + "..." : chatPerson.message}</div>
                                                         </div>
                                                     </div>
                                                 </a>

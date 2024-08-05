@@ -68,21 +68,23 @@ function Product({ products, loading, hasMore }) {
                                 <h2 className="page-title">
                                     Products
                                 </h2>
-                                <div className="text-secondary mt-1">1-12 of 241 Products</div>
+                                {/* <div className="text-secondary mt-1">1-12 of 241 Products</div> */}
                             </div>
                             {/* <!-- Page title actions --> */}
                             <div className="col-auto ms-auto d-print-none">
                                 <div className="d-flex">
-                                    <div className="me-3">
+                                    {/* <div className="me-3">
                                         <div className="input-icon">
                                             <input type="text" value="" className="form-control" placeholder="Search…" />
                                             <span className="input-icon-addon">
-                                                {/* <!-- Download SVG icon from http://tabler-icons.io/i/search --> */}
                                                 <svg xmlns="http://www.w3.org/2000/svg" className="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg>
                                             </span>
                                         </div>
-                                    </div>
-                                    <a href="#" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-report">
+                                    </div> */}
+                                    <Link to={"/chats"} className="btn btn-primary" style={{ "marginRight": "10px" }}>
+                                        Chats
+                                    </Link>
+                                    <a className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-report">
                                         Add Your's
                                     </a>
                                     <div style={{ "marginLeft": "10px" }}>
